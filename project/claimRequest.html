@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Claim Request</title>
+    <link rel="stylesheet" href="claimRequest.css">
+    <script src="claimrequest.js" defer></script>
+</head>
+<body>
+    <header>
+        <nav class="navigation">
+            <a href="dashboard.html">Home</a>
+        </nav>
+    </header>
+
+    <div class="main">
+        <div class="update">
+            <h2>Claim Request Form</h2>
+            <form id="update" method="post" onsubmit="submitForm(event)">
+                <div class="form-group">
+                    <label for="member-id"><strong>Member ID:</strong></label><br>
+                    <input type="text" id="memberId" name="memberId" required>
+                    <button type="button" onclick="searchMember()">Search</button><br><br>
+                </div>
+                <label for="name"><strong>First Name:</strong></label><br>
+                <input type="text" id="fName" name="fName" placeholder="Enter your first Name" required><br><br>
+                <label for="name"><strong>Last Name:</strong></label><br>
+                <input type="text" id="LName" name="LName" placeholder="Enter your last Name" required><br><br>
+                <label for="name"><strong>Nominee Count:</strong></label><br>
+
+                
+                <input type="number" id="insurance-amount" min="1" max="3" value="0" required><br><br>
+
+                <label for="name"><strong>Max Claim Amount:</strong></label><br>
+                <input type="number" id="maxClaimAmount" name="maxClaimAmount" ><br><br>
+
+                <label for="name"><strong>Insurance Type:</strong></label><br>
+                <select id="insuranceType" required onchange="updateClaimReasons()">
+                    <option hidden disabled selected value="">Select Type</option>
+                    <option value="CAR_INSURANCE">Vehicle Insurance</option>
+                    <option value="HOME_INSURANCE">Home Insurance</option>
+                    <option value="LIFE_INSURANCE">Life Insurance</option>
+                </select><br><br>
+
+                <label for="dob"><strong>Request Date:</strong></label><br>
+                <input type="date" id="requestDate" name="requestDate" required><br><br>
+
+                <label for="name"><strong>Claim Reason:</strong></label><br>
+                <select id="claimReason" required>
+                    <option hidden disabled selected value="">Select Reason</option>
+                    
+                </select><br><br>
+
+                <!-- <label for="name"><strong>Final Claim Amount:</strong></label><br>
+                <input type="number" id="finalClaimAmount" name="finalClaimAmount" readonly><br><br> -->
+
+                <input type="submit" id="submit" value="Submit" name="submit">
+            </form>
+        </div>
+    </div>
+    <script>
+        function updateClaimReasons() {
+            var insuranceType = document.getElementById("insuranceType").value;
+            var claimReasonSelect = document.getElementById("claimReason");
+            claimReasonSelect.innerHTML = ""; 
+
+            var claimReasons = [];
+            if (insuranceType === "CAR_INSURANCE") {
+                claimReasons = ["Repair", "Stolen"];
+            } else if (insuranceType === "LIFE_INSURANCE") {
+                claimReasons = [ "Treatment Claim", "Death Claim"];
+            } else if (insuranceType === "HOME_INSURANCE") {
+                claimReasons = ["Renovate" , "Destroyed"];
+            }
+
+            claimReasons.forEach(function(reason) {
+                var option = document.createElement("option");
+                option.text = reason;
+                claimReasonSelect.add(option);
+            });
+        }
+    </script>
+</body>
+</html>

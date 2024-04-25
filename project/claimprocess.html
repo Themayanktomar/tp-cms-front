@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Claim Process</title>
+    <link rel="stylesheet" href="claimprocess.css">
+</head>
+<body>
+<header>
+    <!--<h2 class="logo">CMS</h2>-->
+    <nav class="navigation">
+        <a href="dashboard.html">Home</a>
+    </nav>
+</header>
+
+<div class="main">
+    <div class="search-container">
+        <h2>Search Member ID</h2>
+        <form id="search-form">
+            <label for="search-bar">Enter your Member ID:</label><br>
+            <input type="text" id="search-bar" name="memberId" required>
+            <button type="button" id="search-button">Search</button>
+        </form>
+        <div id="search-results"></div>
+
+        <!-- Rejection Modal Popup -->
+        <div id="rejectionModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Rejection Reason</h2>
+                <input type="text" id="rejectionReason" placeholder="Enter rejection reason...">
+                <button id="submitRejection">Submit</button>
+            </div>
+        </div>
+
+        <!-- Approval Modal Popup -->
+<div id="approvalModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Please Upload Documents</h2>
+        <label for="doc1">Document 1:</label><br>
+        <input type="file" id="doc1" name="doc1"><br>
+        <label for="doc2">Document 2:</label><br>
+        <input type="file" id="doc2" name="doc2"><br>
+        <label for="doc3">Document 3:</label><br>
+        <input type="file" id="doc3" name="doc3"><br>
+        <button id="confirmApproval">Submit</button>
+    </div>
+</div>
+
+        
+       
+<div id="successModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Successful</h2>
+        <!-- Your success message content here -->
+    </div>
+</div>
+
+        
+    </div>
+</div>
+
+<script>
+// Function to show the success modal popup
+function showSuccessModal() {
+    var modal = document.getElementById('successModal');
+    modal.style.display = 'block';
+}
+
+// Function to hide the success modal popup
+function hideSuccessModal() {
+    var modal = document.getElementById('successModal');
+    modal.style.display = 'none';
+}
+
+var successModalClose = document.querySelector('#successModal .close');
+successModalClose.addEventListener('click', function() {
+    hideSuccessModal();
+});
+
+
+
+   // Function to show the rejection modal popup
+function showRejectionModal() {
+    var modal = document.getElementById('rejectionModal');
+    modal.style.display = 'block';
+}
+
+// Function to hide the rejection modal popup
+function hideRejectionModal() {
+    var modal = document.getElementById('rejectionModal');
+    modal.style.display = 'none';
+}
+
+// Function to show the approval modal popup
+function showApprovalModal() {
+    var modal = document.getElementById('approvalModal');
+    modal.style.display = 'block';
+}
+
+// Function to hide the approval modal popup
+function hideApprovalModal() {
+    var modal = document.getElementById('approvalModal');
+    modal.style.display = 'none';
+}
+
+// Function to show the success modal popup
+function showSuccessModal() {
+    var modal = document.getElementById('successModal');
+    modal.style.display = 'block';
+}
+
+// Function to hide the success modal popup
+function hideSuccessModal() {
+    var modal = document.getElementById('successModal');
+    modal.style.display = 'none';
+}
+
+
+var rejectButtons = document.querySelectorAll('.reject-button');
+rejectButtons.forEach(function(button) {
+    button.addEventListener('click', function() {
+        showRejectionModal();
+    });
+});
+
+var approveButtons = document.querySelectorAll('.approve-button');
+approveButtons.forEach(function(button) {
+    button.addEventListener('click', function() {
+        showApprovalModal();
+    });
+});
+
+
+var rejectionModalClose = document.querySelector('#rejectionModal .close');
+rejectionModalClose.addEventListener('click', function() {
+    hideRejectionModal();
+});
+
+var approvalModalClose = document.querySelector('#approvalModal .close');
+approvalModalClose.addEventListener('click', function() {
+    hideApprovalModal();
+});
+
+
+var submitRejectionButton = document.getElementById('submitRejection');
+submitRejectionButton.addEventListener('click', function() {
+    var table = document.getElementById('claimTable');
+    
+        var claimRequestNo = selectedRow.cells[0].textContent; // Assuming claim request number is in the first column
+        var rejectionReason = document.getElementById('rejectionReason').value;
+        sendRejectionReason(claimRequestNo, rejectionReason);
+        hideRejectionModal();
+  
+});
+
+
+function fetchClaimsByMemberId(memberId) {
+    var apiUrl = 'http://localhost:8080/claim/getAllClaimsByMemberId/' + memberId;
+    return fetch(apiUrl);
+}
+
+var confirmApprovalButton = document.getElementById('confirmApproval');
+confirmApprovalButton.addEventListener('click', function() {
+    var memberId = document.getElementById('search-bar').value; // Assuming memberId is retrieved from an input field
+    if (memberId) {
+        fetchClaimsByMemberId(memberId)
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error('Failed to fetch claims by member ID.');
+                }
+            })
+            .then(data => {
+                // Assuming the API response contains an array of claims
+                if (data && data.length > 0) {
+                    var claimRequestNo = data[0].claimRequestNo; // Assuming claim request number is available in the first claim
+                    if (claimRequestNo) {
+                        var formData = new FormData();
+                        formData.append('claimRequestNo', claimRequestNo);
+                        sendApprovalRequest(formData);
+                        showSuccessModal();
+                        hideApprovalModal();
+                    } else {
+                        alert('Claim request number not found in the response.');
+                    }
+                } else {
+                    alert('No claims found for the member ID.');
+                }
+            })
+            .catch(error => {
+                console.error('Error occurred while fetching claims by member ID:', error);
+            });
+    } else {
+        alert('Please enter a member ID.');
+    }
+});
+
+// Function to send approval request to the API
+function sendApprovalRequest(formData) {
+    // Construct your API request here
+    var apiUrl = 'http://localhost:8080/claim/approveClaim';
+
+    // Send the request using fetch or any other appropriate method
+    fetch(apiUrl, {
+        method: 'PUT',
+        body: formData
+    })
+    .then(response => {
+        if (response.ok) {
+            // Handle success
+            console.log('Claim approval request sent successfully.');
+        } else {
+            // Handle error
+            console.error('Failed to send claim approval request.');
+        }
+    })
+    .catch(error => {
+        console.error('Error occurred while sending claim approval request:', error);
+    });
+}
+
+
+
+var successModalClose = document.querySelector('#successModal .close');
+successModalClose.addEventListener('click', function() {
+    hideSuccessModal();
+});
+
+
+
+</script>
+
+<script src="claimprocess.js"></script>
+</body>
+</html>

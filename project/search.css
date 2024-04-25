@@ -1,0 +1,156 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+ 
+.nav {
+    color: white;
+    height: 10vh;
+    background: black;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+ 
+.navleft h1{
+    margin-left:20px;
+    font-size:23px;
+}
+.navbarright ul {
+    display: flex;
+}
+ 
+    .navbarright ul li {
+        list-style: none;
+    }
+ 
+    .navbarright ul a {
+        text-decoration: none;
+        font-size: 20px;
+        padding: 15px;
+        margin-right: 20px;
+        color: white;
+        cursor: pointer;
+        font-weight:bold;
+    }
+ 
+        .navbarright ul a:hover {
+            color: #4070f4;
+        }
+ 
+.container {
+    height: 97vh;
+    background-color: #E2EAF4;
+}
+.Search {
+    height: 7vh;
+    margin-top: 8px;
+}
+ 
+    .Search h1 {
+        margin-left: 5px;
+        color: black;
+        font-size: 22px;
+        border-bottom: 2px solid black;
+    }
+ 
+input#submit {
+    width: 100px;
+    border: 2px solid black;
+    border-radius: 10px 10px;
+    padding: 4px;
+    font-size: 14px;
+    box-shadow: 1px 2px 2px cadetblue;
+    background-color: #5783f2;
+    cursor: pointer;
+}
+ 
+#submit:hover {
+    color: white;
+}
+.Claims {
+    display:flex;
+    justify-content:center;
+    margin-right:10px;
+
+}
+ 
+.levelclass{
+    font-size:18px;
+}
+ 
+ 
+.searchBox {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+    border-bottom: 2px dotted black;
+}
+input#name {
+    /*background-color: #747678;
+    color: #fff;*/
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    outline: 0;
+    font-size: 13px;
+    padding: 8px;
+}
+
+input#memberId{
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    outline: 0;
+    font-size: 13px;
+    padding: 8px;
+}
+input#myDate {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    outline: 0;
+    font-size: 12px;
+    padding: 8px;
+}
+ 
+/*footer*/
+.footer{
+     text-align:center;
+     background-color:black;
+     color:white;
+}
+
+
+/* Style for table */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    padding: 10px; /* Added padding */
+}
+
+/* Style for table headers */
+th {
+    background-color: #0d47a1; /* Dark blue */
+    color: white; /* White text */
+    font-weight: bold;
+    padding: 12px; /* Increased padding */
+    text-align: left;
+    border: 1px solid #0d47a1; /* Dark border */
+}
+
+/* Style for table data cells */
+td {
+    border: 1px solid #0d47a1; /* Dark border */
+    padding: 12px; /* Increased padding */
+    text-align: left;
+}
+
+/* Alternate row color */
+tr:nth-child(even) {
+    background-color: white;
+}
+
+/* Hover effect */
+tr:hover {
+    background-color: white;
+}
+

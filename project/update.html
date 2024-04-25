@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>update Member</title>
+    <link rel="stylesheet" href="update.css">
+    <script src="update.js"></script>
+   
+</head>
+<body>
+<header>
+   <!--<h2 class="logo">CMS</h2>-->
+ 
+        <nav class="navigation">
+<a href="dashboard.html">Home</a>
+
+</nav>
+</header>
+    
+    
+
+    <div class="main">
+
+    <div class ="update">
+       <h2>update Members profile </h2>
+       <form id="update" method="post">
+        <div class="form-group">
+            <label for="name">* First Name:  </label><br>
+            <input type="text" id="Name" name="fName" placeholder="Enter your first Name" required><br><br>
+            <label for="name">* Last Name :  </label><br>
+            <input type="text" id="Name" name="LName" placeholder="Enter your last Name" required><br><br>
+            <lable for="dob">Date of Birth:  <lable><br>
+            <input type="date" id="Name" name="birthday" max=""  onkeypress="return validateDate" required><br><br>
+            <label for="name">* Contact No :  </label><br>
+            <input type="tel" id="Name" name="phone" placeholder="mobile no" maxlength="10" onkeypress="return isNumberKey(event)" required><br><br>
+
+           
+
+            <label for="name"> Address :  </label><br>
+            <input type="text" id="Add" name="Address" placeholder="Enter your Current Address" required><br><br>
+
+             <label for="name">* Email id:  </label><br>
+            <input type="email" id="Add" name="Email" placeholder="example@gmail.com" multiple required><br><br>
+            <label for="name">Gender:  </label>
+            <select id="Name" required onchange="updateInsuredAmount()">
+              <option hidden disabled selected value="">Select Type</option>
+              <option value="Male">Male</option>
+              <option value="female">Female</option>
+              <option value="other">Other</option></select>
+             <!-- &nbsp;&nbsp;&nbsp;
+            <input type="radio"  name="gender" id="male">
+            &nbsp;
+            <span id="male">Male</span>
+             &nbsp;&nbsp;&nbsp;&nbsp;
+             <input type="radio" name="gender" id="female">
+             &nbsp;
+             <span id="female">Female</span>
+             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <input type="radio" name="gender" id="other">
+             &nbsp;
+             <span id="female">other</span>-->
+
+
+             <br><br>
+             <label for="insurance-type">Insurance Type:</label><br>
+             
+              <select id="Name" required onchange="updateInsuredAmount()">
+              <option hidden disabled selected value="">Select Type</option>
+              <option value="vehicle">Vehicle Insurance</option>
+              <option value="home">Home Insurance</option>
+              <option value="life">Life Insurance</option></select><br><br>
+
+              <label for="name">Insured Amount:</label><br>
+              <input type="text" id="Name" placeholder="Enter Amount" readonly ><br><br>
+
+              <label for="nominee-count">Nominee Count:</label><br>
+              <input type="number" id="insurance-amount" min="1" max="3" value="0" required><br><br>
+              
+              <label for="name">Max claimable amount:</label><br>
+              <input type="text" id="Name" placeholder="Enter Amount" readonly ><br><br>
+             
+
+        <!-- Add other fields here -->
+        <!-- ... -->
+        
+       
+        
+        <input type="submit" id="submit" value="update member" name="submit">
+         <input type="reset" id="Reset" value="Reset" name="submit">
+        
+    </form>
+    </div><!--end update-->
+    </div> <!--end main-->
+   
+</body>
+</html>

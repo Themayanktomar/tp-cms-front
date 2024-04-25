@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title></title>
+    <link rel="stylesheet" href="search.css" />
+    <script src="search.js"></script>
+
+  </head>
+  <body>
+    <div class="container">
+      <div class="nav">
+        <div class="navleft">
+          <h1>Welcome to Claims Portal</h1>
+        </div>
+        <div class="navbarright">
+          <ul>
+            <a href="dashboard.html"> <li>Home</li></a>
+            <a href="#"> <li>About</li></a>
+          </ul>
+        </div>
+      </div>
+
+      <div class="Search">
+        <h1>Search Claims</h1>
+      </div>
+      <div class="Claims">
+        <form action="#">
+          <div>
+            <label class="levelclass">Member id</label>
+            <input type="text" id="memberId" placeholder="Member id" />
+
+            <label class="levelclass">Member Name</label>
+            <input type="text" id="firstName" placeholder="Member Name" />
+
+            <label class="levelclass">Request From Date</label>
+            <input type="date" id="fromDate" />
+
+            <label class="levelclass">Request To Date</label>
+            <input type="date" id="toDate" /><br /><br />
+          </div>
+
+          <div class="searchBox">
+            <input
+              type="submit"
+              id="submit"
+              value="Submit"
+              name="Submit"
+              onclick="searchClaims()"
+            />
+          </div>
+        </form>
+      </div>
+      <div id="responseTable"></div>
+    </div>
+    <footer>
+      <div class="footer">@copy 2024 Claims Management System</div>
+    </footer>
+  </body>
+</html>

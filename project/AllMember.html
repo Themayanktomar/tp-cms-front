@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>All Members</title>
+    <link rel="stylesheet" href="allmember.css">
+    <script src="allmember.js"></script>
+</head>
+<body>
+    <div class="background-image"></div> <!-- Background image container -->
+    <div class="container">
+        <h1>All Members</h1>
+        <table id="memberTable">
+            <thead>
+                <tr>
+                    <th>Member ID</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Date of Birth</th>
+                    <th>Address</th>
+                    <th>Contact No</th>
+                    <th>Email</th>
+                    <th>Gender</th>
+                    <th>Nominee Count</th>
+                    <th>Insurance Type</th>
+                    <th>Max Claim Amount</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="memberData">
+                <!-- Member data will be populated here -->
+            </tbody>
+        </table>
+    </div>
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+          <span class="close">&times;</span>
+          <form id="editForm">
+            <!-- Form fields for member data -->
+            <input type="hidden" id="memberId" name="memberId">
+
+            <label for="name">* First Name:  </label><br>
+            <input type="text" id="firstName" name="fName" placeholder="Enter your first Name" required><br><br>
+            <label for="name">* Last Name :  </label><br>
+            <input type="text" id="lastName" name="LName" placeholder="Enter your last Name" required><br><br>
+            <lable for="dob">Date of Birth:  <lable><br>
+            <input type="date" id="DOB" name="birthday" max=""  onkeypress="return validateDate" required><br><br>
+            <label for="name">* Contact No :  </label><br>
+            <input type="tel" id="Contact" name="phone" placeholder="mobile no" maxlength="10" onkeypress="return isNumberKey(event)" required><br><br>
+            <label for="name"> Address :  </label><br>
+            <input type="text" id="Address" name="Address" placeholder="Enter your Current Address" required><br><br>
+            <label for="name">* Email id:  </label><br>
+            <input type="email" id="mail" name="Email" placeholder="example@gmail.com" multiple required><br><br>
+            <label for="name">Gender:  </label>
+            <select id="gender" required onchange="updateInsuredAmount()">
+              <option hidden disabled selected value="">Select Type</option>
+              <option value="Male">Male</option>
+              <option value="female">Female</option>
+              <option value="other">Other</option></select>
+             <br><br>
+             <label for="insurance-type">Insurance Type:</label><br>
+             
+              <select id="insurance" required onchange="updateInsuredAmount()">
+              <option hidden disabled selected value="">Select Type</option>
+              <option value="vehicle">Vehicle Insurance</option>
+              <option value="home">Home Insurance</option>
+              <option value="life">Life Insurance</option></select><br><br>
+
+              <label for="name">Insured Amount:</label><br>
+              <input type="text" id="amount" placeholder="Enter Amount"  ><br><br>
+
+              <label for="nominee-count">Nominee Count:</label><br>
+              <input type="number" id="nomineeCount" min="1" max="3" value="0" required><br><br>
+              
+              <label for="name">Max claimable amount:</label><br>
+              <input type="text" id="maxAmount" placeholder="Enter Amount"  ><br><br>
+
+           
+            <button type="submit">Save</button>
+          </form>
+        </div>
+      </div>
+      
+</body>
+</html>
