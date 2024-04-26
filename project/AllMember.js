@@ -129,15 +129,15 @@ document.addEventListener('DOMContentLoaded', function () {
     // Close the modal when clicking on the close button
     document.addEventListener('click', function(event) {
         if (event.target.classList.contains('close')) {
-            document.getElementById('editModal').style.display = 'none';
+            closeModal();
         }
     });
 
     // Close the modal when clicking outside the modal
     window.addEventListener('click', function(event) {
         const modal = document.getElementById('editModal');
-        if (event.target == modal) {
-            modal.style.display = 'none';
+        if (event.target === modal) {
+            closeModal();
         }
     });
 
@@ -146,37 +146,29 @@ document.addEventListener('DOMContentLoaded', function () {
         event.preventDefault(); // Prevent default form submission behavior
 
         // Gather form field values
-        const memberId = document.getElementById('memberId').value; // Assuming you have a hidden input field for memberId
-        const firstName = document.getElementById('firstName').value;
-        const lastName = document.getElementById('lastName').value;
-        const dateOfBirth = document.getElementById('DOB').value;
-        const contactNo = document.getElementById('Contact').value;
-        const address = document.getElementById('Address').value;
-        const email = document.getElementById('mail').value;
-        const gender = document.getElementById('gender').value;
-        const insuranceType = document.getElementById('insurance').value;
-        const nomineeCount = document.getElementById('nomineeCount').value;
-        const maxClaimAmount = document.getElementById('maxAmount').value;
-
-        // Construct payload
         const payload = {
-           memberId,
-            firstName,
-            lastName,
-            dateOfBirth,
-            contactNo,
-            address,
-            email,
-            gender,
-            insuranceType,
-            nomineeCount,
-            maxClaimAmount
+            memberId: document.getElementById('memberId').value,
+            firstName: document.getElementById('firstName').value,
+            lastName: document.getElementById('lastName').value,
+            dateOfBirth: document.getElementById('DOB').value,
+            contactNo: document.getElementById('Contact').value,
+            address: document.getElementById('Address').value,
+            email: document.getElementById('mail').value,
+            gender: document.getElementById('gender').value,
+            insuranceType: document.getElementById('insurance').value,
+            nomineeCount: document.getElementById('nomineeCount').value,
+            maxClaimAmount: document.getElementById('max-claim-amount').value // Corrected ID
         };
 
         // Send payload to API
         updateMemberData(payload);
     });
 });
+
+function closeModal() {
+    // Hide the modal
+    document.getElementById('editModal').style.display = 'none';
+}
 
 async function updateMemberData(payload) {
     try {
@@ -192,11 +184,9 @@ async function updateMemberData(payload) {
             console.log('Response data:', responseData); // Log the response data for debugging
             // Show response message in a popup or alert
             alert('Member data updated successfully: ' + responseData);
-            
-            // Redirect to allmember.html after 2 seconds
-            setTimeout(function() {
-                window.location.href = 'allmember.html';
-            }, 2000); // 2000 milliseconds = 2 seconds
+            closeModal(); // Close modal after successful update
+            // Reload or redirect to update the member list
+            window.location.reload(); // Reload the current page
         } else {
             console.error('Failed to update member data:', response.statusText);
         }
@@ -204,5 +194,6 @@ async function updateMemberData(payload) {
         console.error('Error updating member data:', error);
     }
 }
+
 
 
