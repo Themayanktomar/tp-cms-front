@@ -47,7 +47,7 @@ async function editMember(memberId) {
     }
 }
 
-function populateModalForm(memberData) {
+async function populateModalForm(memberData) {
     document.getElementById('memberId').value = memberData.memberId;
     document.getElementById('firstName').value = memberData.firstName;
     document.getElementById('lastName').value = memberData.lastName;
@@ -57,11 +57,66 @@ function populateModalForm(memberData) {
     document.getElementById('mail').value = memberData.email;
     document.getElementById('gender').value = memberData.gender;
     document.getElementById('insurance').value = memberData.insuranceType;
-    document.getElementById('amount').value = memberData.maxClaimAmount;
+    document.getElementById('insured-amount').value = memberData.maxClaimAmount;
     document.getElementById('nomineeCount').value = memberData.nomineeCount;
-    document.getElementById('maxAmount').value = memberData.maxClaimAmount;
+    document.getElementById('max-claim-amount').value = memberData.maxClaimAmount;
+
+    const insuranceSelect = document.getElementById('insurance');
+    const insuranceOptions = insuranceSelect.options;
+    let optionFound = false;
+    for (let i = 0; i < insuranceOptions.length; i++) {
+        if (insuranceOptions[i].value === memberData.insuranceType) {
+            insuranceSelect.selectedIndex = i;
+            optionFound = true;
+            break;
+        }
+    }
+    // If the option is not found, add it to the select field
+    if (!optionFound) {
+        const newOption = document.createElement('option');
+        newOption.text = memberData.insuranceType;
+        newOption.value = memberData.insuranceType;
+        insuranceSelect.add(newOption);
+        insuranceSelect.selectedIndex = insuranceOptions.length - 1; // Select the newly added option
+    }
     
+    // Auto-populate insured amount and max claim amount based on insurance type
+    await updateInsuredAmount();
 }
+
+async function updateInsuredAmount() {
+    const insuranceType = document.getElementById("insurance").value;
+    let insuredAmount = 0;
+    let claimAmount = 0;
+
+    try {
+        const response = await fetch(`http://localhost:8080/members/getInsuranceAmount/${insuranceType}`);
+        const data = await response.json();
+        insuredAmount = parseFloat(data); 
+        switch (insuranceType) {
+            case "LIFE_INSURANCE":
+                claimAmount = insuredAmount * 1.00;
+                break;
+            case "HOME_INSURANCE":
+                claimAmount = insuredAmount * 0.91; 
+                break;
+            case "CAR_INSURANCE":
+                claimAmount = insuredAmount * 0.80; 
+                break;
+            default:
+                claimAmount = 0;
+                break;
+        }
+    } catch (error) {
+        console.error("Error fetching insured amount:", error);
+        insuredAmount = 0; 
+        claimAmount = 0;
+    }
+
+    document.getElementById("insured-amount").value = insuredAmount;
+    document.getElementById("max-claim-amount").value = claimAmount;
+}
+
 
 function openModal() {
     // Show the modal
@@ -133,8 +188,15 @@ async function updateMemberData(payload) {
             body: JSON.stringify(payload)
         });
         if (response.ok) {
-            console.log('Member data updated successfully');
-            // Optionally, close the modal or perform other actions
+            const responseData = await response.text(); // Get response as text
+            console.log('Response data:', responseData); // Log the response data for debugging
+            // Show response message in a popup or alert
+            alert('Member data updated successfully: ' + responseData);
+            
+            // Redirect to allmember.html after 2 seconds
+            setTimeout(function() {
+                window.location.href = 'allmember.html';
+            }, 2000); // 2000 milliseconds = 2 seconds
         } else {
             console.error('Failed to update member data:', response.statusText);
         }
@@ -142,4 +204,5 @@ async function updateMemberData(payload) {
         console.error('Error updating member data:', error);
     }
 }
+
 

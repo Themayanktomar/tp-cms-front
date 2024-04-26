@@ -61,18 +61,18 @@ function submitForm(event) {
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
-        return response.json();
+        return response.text(); // Get response as text
     })
     .then(data => {
         console.log('Claim submitted successfully:', data);
-        document.getElementById("update").reset();
-        document.getElementById("memberId").disabled = false;
-        window.location.reload(); 
+        alert(data); // Show response message in a popup or alert
+        window.location.href = 'dashboard.html'; // Redirect to dashboard.html
     })
     .catch(error => {
         console.error('There was a problem with your fetch operation:', error);
     });
 }
+
 
 function updateClaimReasons() {
     var insuranceType = document.getElementById("insuranceType").value;

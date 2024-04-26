@@ -42,7 +42,7 @@ function registerMember(event) {
         dateOfBirth: document.querySelector('input[name="birthday"]').value,
         address: document.querySelector('input[name="Address"]').value,
         contactNo: parseInt(document.querySelector('input[name="phone"]').value),
-        email: document.querySelector('input[name="fName"]').value,
+        email: document.querySelector('input[name="email"]').value,
         gender: document.querySelector('select').value.toLowerCase(),
         nomineeCount: parseInt(document.querySelector('input#insurance-amount').value),
         insuranceType: document.querySelector('select#insurance-type').value
@@ -54,33 +54,27 @@ function registerMember(event) {
         headers: {
             'Content-Type': 'application/json'
         },
-       
         body: JSON.stringify(formData) // Convert form data to JSON
     })
     .then(response => {
         if (response.ok) {
-            // SweetAlert2 success pop-up
-            Swal.fire({
-                icon: 'success',
-                title: 'Member Registered',
-                text: 'The member has been registered successfully!',
-                confirmButtonText: 'OK'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    window.location.href = "dashboard.html"; // Redirect to dashboard
-                }
-            });
+            return response.text(); // Return response text
         } else {
-            // SweetAlert2 error pop-up with error details
-            response.json().then(data => {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Registration Error',
-                    text: data.message || 'Unable to register member.',
-                    confirmButtonText: 'OK'
-                });
-            });
+            throw new Error('Network response was not ok');
         }
+    })
+    .then(data => {
+        // Show SweetAlert2 pop-up with response message
+        Swal.fire({
+            icon: 'success',
+            title: 'Member Registered',
+            text: data,
+            confirmButtonText: 'OK'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = "dashboard.html"; // Redirect to dashboard
+            }
+        });
     })
     .catch(error => {
         // SweetAlert2 pop-up for unexpected errors
@@ -93,3 +87,4 @@ function registerMember(event) {
         console.error("An error occurred:", error);
     });
 }
+

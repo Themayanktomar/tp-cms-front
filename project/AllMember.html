@@ -59,22 +59,22 @@
               <option value="female">Female</option>
               <option value="other">Other</option></select>
              <br><br>
-             <label for="insurance-type">Insurance Type:</label><br>
-             
-              <select id="insurance" required onchange="updateInsuredAmount()">
-              <option hidden disabled selected value="">Select Type</option>
-              <option value="vehicle">Vehicle Insurance</option>
-              <option value="home">Home Insurance</option>
-              <option value="life">Life Insurance</option></select><br><br>
+             <label for="insurance">Insurance Type:</label><br>
+             <select id="insurance" required onchange="updateInsuredAmount()">
+                 <option hidden disabled selected value="">Select Type</option>
+                 <option value="LIFE_INSURANCE">Life Insurance</option>
+                 <option value="HOME_INSURANCE">Home Insurance</option>
+                 <option value="CAR_INSURANCE">Car Insurance</option>
+             </select><br><br>
 
-              <label for="name">Insured Amount:</label><br>
-              <input type="text" id="amount" placeholder="Enter Amount"  ><br><br>
+             <label for="insured-amount">Insured Amount:</label><br>
+             <input type="text" id="insured-amount" placeholder="Insured Amount" readonly><br><br>
 
               <label for="nominee-count">Nominee Count:</label><br>
               <input type="number" id="nomineeCount" min="1" max="3" value="0" required><br><br>
               
-              <label for="name">Max claimable amount:</label><br>
-              <input type="text" id="maxAmount" placeholder="Enter Amount"  ><br><br>
+              <label for="max-claim-amount">Max Claim Amount:</label><br>
+              <input type="text" id="max-claim-amount" placeholder="Max Claim Amount" readonly><br><br>
 
            
             <button type="submit">Save</button>
