@@ -54,6 +54,7 @@ function registerMember(event) {
         headers: {
             'Content-Type': 'application/json'
         },
+       
         body: JSON.stringify(formData) // Convert form data to JSON
     })
     .then(response => {

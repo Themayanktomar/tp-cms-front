@@ -17,6 +17,7 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
         headers: {
             'Content-Type': 'application/json'
         },
+    
         body: JSON.stringify(requestBody)
     })
     .then(response => response.json())
